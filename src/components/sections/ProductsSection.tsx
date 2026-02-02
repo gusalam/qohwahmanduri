@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { Check, Leaf, Heart, Zap, Coffee, Package } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Check, Leaf, Heart, Zap, Coffee, Package, ArrowRight } from 'lucide-react';
 import productImage1 from '@/assets/product-gallery-1.png';
 import productImage2 from '@/assets/product-gallery-2.png';
 import productImage3 from '@/assets/product-gallery-3.png';
@@ -116,7 +117,14 @@ function ProductCard({ product, index }: { product: typeof products[0]; index: n
             <span className="text-xs text-muted-foreground font-sans">{product.info}</span>
           </div>
           
-          <div className="flex items-center justify-end">
+          <div className="flex items-center justify-between gap-3">
+            <Link
+              to="/produk/qohwah-manduri"
+              className="text-sm font-medium text-accent hover:text-accent/80 transition-colors font-sans flex items-center gap-1"
+            >
+              Lihat Detail
+              <ArrowRight className="w-4 h-4" />
+            </Link>
             <motion.a
               href={SHOPEE_LINK}
               target="_blank"
