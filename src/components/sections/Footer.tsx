@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
-import { Phone, Instagram, Facebook, Mail, MapPin, ShoppingBag } from 'lucide-react';
+import { Phone, Instagram, Facebook, Mail, MapPin, ShoppingBag, Music2 } from 'lucide-react';
 
 const WHATSAPP_NUMBER = '6281249622253';
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
 const MAPS_LINK = 'https://maps.app.goo.gl/xsz5KHyMSPPQMGd36';
 const SHOPEE_LINK = 'https://s.shopee.co.id/20pgTNkUwl';
 const TOKOPEDIA_LINK = 'https://vt.tokopedia.com/t/ZS91prYtK3nCn-lM7t4/';
+const TIKTOK_LINK = 'https://www.tiktok.com/@mas_gian_?_r=1&_t=ZS-93aH9z5I3sI';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -53,6 +54,7 @@ export default function Footer() {
               {[
                 { icon: Instagram, href: '#', label: 'Instagram' },
                 { icon: Facebook, href: '#', label: 'Facebook' },
+                { icon: Music2, href: TIKTOK_LINK, label: 'TikTok' },
                 { icon: ShoppingBag, href: SHOPEE_LINK, label: 'Shopee' },
                 { icon: ShoppingBag, href: TOKOPEDIA_LINK, label: 'Tokopedia' },
               ].map((social, index) => {
