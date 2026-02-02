@@ -137,12 +137,10 @@ export default function ProductDetail() {
                 <span className="text-muted-foreground font-sans text-sm">(500+ ulasan)</span>
               </div>
               
-              {/* Price */}
-              <div className="py-4 border-y border-primary/10">
-                <p className="text-sm text-muted-foreground font-sans mb-1">Harga mulai dari</p>
-                <p className="text-3xl font-bold text-primary font-sans">
-                  Rp 35.000
-                  <span className="text-lg font-normal text-muted-foreground ml-2">/ Box (10 Sachet)</span>
+              {/* Info Note */}
+              <div className="py-3 px-4 bg-accent/10 rounded-lg border border-accent/20">
+                <p className="text-sm text-muted-foreground font-sans italic">
+                  * Harga dapat berubah sewaktu-waktu. Cek harga terbaru di Shopee.
                 </p>
               </div>
               
