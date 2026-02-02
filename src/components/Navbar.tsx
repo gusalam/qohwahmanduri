@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, ShoppingBag, Music2 } from 'lucide-react';
 
 const SHOPEE_LINK = 'https://s.shopee.co.id/20pgTNkUwl';
 const TOKOPEDIA_LINK = 'https://vt.tokopedia.com/t/ZS91prYtK3nCn-lM7t4/';
+const TIKTOK_LINK = 'https://www.tiktok.com/@mas_gian_?_r=1&_t=ZS-93aH9z5I3sI';
 
 const navLinks = [
   { label: 'Beranda', href: '#' },
@@ -17,6 +18,7 @@ const navLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOrderDropdownOpen, setIsOrderDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -132,22 +134,81 @@ export default function Navbar() {
                     {link.label}
                   </motion.a>
                 ))}
-                <motion.a
-                  href={SHOPEE_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                
+                {/* Order Dropdown */}
+                <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="inline-flex w-fit px-8 py-3 rounded-full text-lg font-semibold font-sans mt-4"
-                  style={{ 
-                    background: 'var(--gradient-gold)',
-                    color: 'hsl(var(--coffee-dark))',
-                  }}
+                  className="mt-4 relative"
                 >
-                  Pesan Sekarang
-                </motion.a>
+                  <button
+                    onClick={() => setIsOrderDropdownOpen(!isOrderDropdownOpen)}
+                    className="inline-flex items-center gap-2 w-fit px-8 py-3 rounded-full text-lg font-semibold font-sans"
+                    style={{ 
+                      background: 'var(--gradient-gold)',
+                      color: 'hsl(var(--coffee-dark))',
+                    }}
+                  >
+                    Pesan Sekarang
+                    <ChevronDown className={`w-5 h-5 transition-transform ${isOrderDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  <AnimatePresence>
+                    {isOrderDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute left-0 mt-2 w-56 rounded-xl shadow-lg z-50 overflow-hidden"
+                        style={{ background: 'hsl(var(--coffee-medium))' }}
+                      >
+                        <div className="py-2">
+                          <a
+                            href={SHOPEE_LINK}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => {
+                              setIsOrderDropdownOpen(false);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="flex items-center gap-3 px-4 py-3 text-cream hover:bg-gold/20 transition-colors"
+                          >
+                            <ShoppingBag className="w-5 h-5 text-gold" />
+                            <span className="font-sans">Shopee</span>
+                          </a>
+                          <a
+                            href={TIKTOK_LINK}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => {
+                              setIsOrderDropdownOpen(false);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="flex items-center gap-3 px-4 py-3 text-cream hover:bg-gold/20 transition-colors"
+                          >
+                            <Music2 className="w-5 h-5 text-gold" />
+                            <span className="font-sans">TikTok</span>
+                          </a>
+                          <a
+                            href={TOKOPEDIA_LINK}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => {
+                              setIsOrderDropdownOpen(false);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="flex items-center gap-3 px-4 py-3 text-cream hover:bg-gold/20 transition-colors"
+                          >
+                            <ShoppingBag className="w-5 h-5 text-gold" />
+                            <span className="font-sans">Tokopedia</span>
+                          </a>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
               </div>
             </div>
           </motion.div>
