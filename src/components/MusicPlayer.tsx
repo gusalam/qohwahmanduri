@@ -4,6 +4,9 @@ import { Play, Pause, Volume2 } from 'lucide-react';
 import backgroundMusic from '@/assets/background-music.mp3';
 import artworkImage from '@/assets/product-qohwah-manduri.jpg';
 
+// Logo for visual player (from public folder - same as navbar)
+const LOGO_URL = '/favicon.png';
+
 const STORAGE_KEY = 'qohwah-music-paused';
 
 // Media Session Metadata
@@ -223,9 +226,12 @@ export default function MusicPlayer() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {/* Rotating Artwork */}
+                {/* Rotating Logo */}
                 <motion.div
-                  className="absolute inset-1 rounded-full overflow-hidden"
+                  className="absolute inset-1 rounded-full overflow-hidden flex items-center justify-center"
+                  style={{
+                    background: 'linear-gradient(135deg, hsl(30 20% 10%) 0%, hsl(30 15% 5%) 100%)',
+                  }}
                   animate={{ rotate: isPlaying ? 360 : 0 }}
                   transition={{
                     duration: 8,
@@ -234,16 +240,9 @@ export default function MusicPlayer() {
                   }}
                 >
                   <img 
-                    src={artworkImage} 
-                    alt="Qohwah Manduri"
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Dark overlay for better contrast */}
-                  <div 
-                    className="absolute inset-0"
-                    style={{
-                      background: 'radial-gradient(circle, transparent 30%, rgba(0,0,0,0.4) 100%)',
-                    }}
+                    src={LOGO_URL} 
+                    alt="Qohwah Manduri Logo"
+                    className="w-8 h-8 object-contain"
                   />
                 </motion.div>
                 
