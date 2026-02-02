@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Phone, Instagram, Facebook, Mail, MapPin, ShoppingBag, Music2 } from 'lucide-react';
+import { Phone, Mail, MapPin, ShoppingBag, Music2 } from 'lucide-react';
 
 const WHATSAPP_NUMBER = '6281249622253';
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -52,8 +52,6 @@ export default function Footer() {
             {/* Social Media */}
             <div className="flex gap-4">
               {[
-                { icon: Instagram, href: '#', label: 'Instagram' },
-                { icon: Facebook, href: '#', label: 'Facebook' },
                 { icon: Music2, href: TIKTOK_LINK, label: 'TikTok' },
                 { icon: ShoppingBag, href: SHOPEE_LINK, label: 'Shopee' },
                 { icon: ShoppingBag, href: TOKOPEDIA_LINK, label: 'Tokopedia' },
