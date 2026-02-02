@@ -2,10 +2,10 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, Volume2 } from 'lucide-react';
 import backgroundMusic from '@/assets/background-music.mp3';
-import artworkImage from '@/assets/product-qohwah-manduri.jpg';
+import qohwahLogo from '@/assets/qohwah-logo.png';
 
-// Logo for visual player (from public folder - same as navbar)
-const LOGO_URL = '/favicon.png';
+// Media artwork URL for Media Session API (must be absolute URL for Android notifications)
+const MEDIA_ARTWORK_URL = '/media-artwork.png';
 
 const STORAGE_KEY = 'qohwah-music-paused';
 
@@ -25,18 +25,21 @@ export default function MusicPlayer() {
   // Setup Media Session API
   const setupMediaSession = useCallback(() => {
     if ('mediaSession' in navigator) {
+      // Get absolute URL for artwork
+      const artworkUrl = new URL(MEDIA_ARTWORK_URL, window.location.origin).href;
+      
       // Set metadata with artwork
       navigator.mediaSession.metadata = new MediaMetadata({
         title: MEDIA_METADATA.title,
         artist: MEDIA_METADATA.artist,
         album: MEDIA_METADATA.album,
         artwork: [
-          { src: artworkImage, sizes: '96x96', type: 'image/jpeg' },
-          { src: artworkImage, sizes: '128x128', type: 'image/jpeg' },
-          { src: artworkImage, sizes: '192x192', type: 'image/jpeg' },
-          { src: artworkImage, sizes: '256x256', type: 'image/jpeg' },
-          { src: artworkImage, sizes: '384x384', type: 'image/jpeg' },
-          { src: artworkImage, sizes: '512x512', type: 'image/jpeg' },
+          { src: artworkUrl, sizes: '96x96', type: 'image/png' },
+          { src: artworkUrl, sizes: '128x128', type: 'image/png' },
+          { src: artworkUrl, sizes: '192x192', type: 'image/png' },
+          { src: artworkUrl, sizes: '256x256', type: 'image/png' },
+          { src: artworkUrl, sizes: '384x384', type: 'image/png' },
+          { src: artworkUrl, sizes: '512x512', type: 'image/png' },
         ],
       });
 
@@ -240,9 +243,9 @@ export default function MusicPlayer() {
                   }}
                 >
                   <img 
-                    src={LOGO_URL} 
+                    src={qohwahLogo} 
                     alt="Qohwah Manduri Logo"
-                    className="w-8 h-8 object-contain"
+                    className="w-10 h-10 object-contain"
                   />
                 </motion.div>
                 
