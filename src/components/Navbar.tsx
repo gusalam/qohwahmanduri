@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 const SHOPEE_LINK = 'https://s.shopee.co.id/20pgTNkUwl';
+const TOKOPEDIA_LINK = 'https://vt.tokopedia.com/t/ZS91prYtK3nCn-lM7t4/';
 
 const navLinks = [
   { label: 'Beranda', href: '#' },
@@ -69,18 +70,28 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href={SHOPEE_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-full text-sm font-semibold font-sans transition-all hover:-translate-y-0.5"
-                style={{ 
-                  background: 'var(--gradient-gold)',
-                  color: 'hsl(var(--coffee-dark))',
-                }}
-              >
-                Beli Sekarang
-              </a>
+              <div className="flex items-center gap-2">
+                <a
+                  href={SHOPEE_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-full text-sm font-semibold font-sans transition-all hover:-translate-y-0.5"
+                  style={{ 
+                    background: 'var(--gradient-gold)',
+                    color: 'hsl(var(--coffee-dark))',
+                  }}
+                >
+                  Shopee
+                </a>
+                <a
+                  href={TOKOPEDIA_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-full text-sm font-semibold font-sans transition-all hover:-translate-y-0.5 border border-gold/50 text-gold hover:bg-gold/10"
+                >
+                  Tokopedia
+                </a>
+              </div>
             </div>
             
             {/* Mobile Menu Button */}
