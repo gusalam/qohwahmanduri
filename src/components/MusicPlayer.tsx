@@ -94,8 +94,8 @@ export default function MusicPlayer() {
     // Check if user previously paused
     const wasPaused = localStorage.getItem(STORAGE_KEY) === 'true';
     
-    // Set initial volume (ambient/low)
-    audio.volume = 0.15;
+    // Set initial volume (louder)
+    audio.volume = 0.5;
     audio.loop = true;
 
     // Setup media session
