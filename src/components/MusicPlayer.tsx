@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, Volume2 } from 'lucide-react';
+import { Play, Pause, Volume2, X } from 'lucide-react';
 import backgroundMusic from '@/assets/background-music.mp3';
 import qohwahLogo from '@/assets/qohwah-logo.png';
 
@@ -8,6 +8,7 @@ import qohwahLogo from '@/assets/qohwah-logo.png';
 const MEDIA_ARTWORK_URL = '/media-artwork.png';
 
 const STORAGE_KEY = 'qohwah-music-paused';
+const DISMISSED_KEY = 'qohwah-music-dismissed';
 
 // Media Session Metadata
 const MEDIA_METADATA = {
@@ -21,6 +22,10 @@ export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showTapToPlay, setShowTapToPlay] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(() => {
+    // Use sessionStorage so it resets on refresh
+    return sessionStorage.getItem(DISMISSED_KEY) === 'true';
+  });
 
   // Setup Media Session API
   const setupMediaSession = useCallback(() => {
@@ -172,6 +177,22 @@ export default function MusicPlayer() {
     }).catch(() => {});
   };
 
+  const handleDismiss = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      setIsPlaying(false);
+      updatePlaybackState(false);
+    }
+    setIsDismissed(true);
+    sessionStorage.setItem(DISMISSED_KEY, 'true');
+  };
+
+  // Don't render if dismissed
+  if (isDismissed) {
+    return <audio ref={audioRef} src={backgroundMusic} preload="auto" />;
+  }
+
   return (
     <>
       <audio ref={audioRef} src={backgroundMusic} preload="auto" />
@@ -180,23 +201,39 @@ export default function MusicPlayer() {
       <div className="fixed bottom-6 right-6 z-50">
         <AnimatePresence mode="wait">
           {showTapToPlay && !hasInteracted ? (
-            <motion.button
+            <motion.div
               key="tap-to-play"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              onClick={handleTapToPlay}
-              className="flex items-center gap-2 px-4 py-3 rounded-full font-sans text-sm font-medium transition-all duration-300"
-              style={{
-                background: 'linear-gradient(135deg, hsl(30 15% 12%) 0%, hsl(30 20% 8%) 100%)',
-                color: 'hsl(36 60% 60%)',
-                boxShadow: '0 0 20px rgba(180, 140, 80, 0.3), 0 4px 12px rgba(0, 0, 0, 0.4)',
-                border: '1px solid hsl(36 40% 25%)',
-              }}
+              className="relative"
             >
-              <Volume2 className="w-4 h-4" />
-              Tap to Play Music
-            </motion.button>
+              <button
+                onClick={handleTapToPlay}
+                className="flex items-center gap-2 px-4 py-3 rounded-full font-sans text-sm font-medium transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, hsl(30 15% 12%) 0%, hsl(30 20% 8%) 100%)',
+                  color: 'hsl(36 60% 60%)',
+                  boxShadow: '0 0 20px rgba(180, 140, 80, 0.3), 0 4px 12px rgba(0, 0, 0, 0.4)',
+                  border: '1px solid hsl(36 40% 25%)',
+                }}
+              >
+                <Volume2 className="w-4 h-4" />
+                Tap to Play Music
+              </button>
+              {/* Dismiss Button */}
+              <button
+                onClick={handleDismiss}
+                className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                style={{
+                  background: 'hsl(0 60% 40%)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
+                }}
+                aria-label="Tutup pemutar musik"
+              >
+                <X className="w-3.5 h-3.5 text-white" />
+              </button>
+            </motion.div>
           ) : (
             <motion.div
               key="player"
@@ -204,6 +241,19 @@ export default function MusicPlayer() {
               animate={{ opacity: 1, scale: 1 }}
               className="relative"
             >
+              {/* Dismiss Button */}
+              <button
+                onClick={handleDismiss}
+                className="absolute -top-2 -left-2 w-6 h-6 rounded-full flex items-center justify-center transition-all hover:scale-110 z-10"
+                style={{
+                  background: 'hsl(0 60% 40%)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
+                }}
+                aria-label="Tutup pemutar musik"
+              >
+                <X className="w-3.5 h-3.5 text-white" />
+              </button>
+
               {/* Glow Effect */}
               <div 
                 className="absolute inset-0 rounded-full blur-xl opacity-60"
